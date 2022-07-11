@@ -1,7 +1,7 @@
 # Hocs CI Infrastructure
 
 
-This is the Home Office Correspondence Systems (HOCS) CI infrastructure.
+This is the HOCS CI infrastructure.
 This is a repo referenced by other repos to provide centrally configured, consistent and reusable CI pipeline components. 
 
 ## Getting Started
