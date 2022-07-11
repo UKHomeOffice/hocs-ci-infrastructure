@@ -1,4 +1,4 @@
-# Hocs CI Infrastructure
+# HOCS CI Infrastructure
 
 
 This is the HOCS CI infrastructure.
