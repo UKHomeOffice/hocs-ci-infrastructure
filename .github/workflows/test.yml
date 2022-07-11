@@ -6,7 +6,7 @@ on:
         required: true
         type: string
       elastic:
-        required: false
+        required: true
         type: string
 
 jobs:
@@ -25,9 +25,6 @@ jobs:
 
       - name: Start infrastructure
         run: ./ci/infrastructure.sh ${{ inputs.components }} ${{ inputs.elastic }}
-
-      - name: Wait for infrastructure
-        run: ./ci/wait-for-infrastructure.sh
         shell: bash
 
       - name: Run tests
