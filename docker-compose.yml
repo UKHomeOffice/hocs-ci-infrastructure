@@ -30,9 +30,9 @@ services:
       LOCALSTACK_HOSTNAME: "localhost.localstack.cloud"
       SQS_PROVIDER: "elasticmq"
     volumes:
-      - ./ci/localstack/0-install-dependencies.sh:/docker-entrypoint-initaws.d/0-install-dependencies.sh
-      - ./ci/localstack/1-setup-buckets.sh:/docker-entrypoint-initaws.d/1-setup-buckets.sh
-      - ./ci/localstack/2-setup-queues.sh:/docker-entrypoint-initaws.d/2-setup-queues.sh
+      - ${PWD}/localstack/0-install-dependencies.sh:/docker-entrypoint-initaws.d/0-install-dependencies.sh
+      - ${PWD}/localstack/1-setup-buckets.sh:/docker-entrypoint-initaws.d/1-setup-buckets.sh
+      - ${PWD}/localstack/2-setup-queues.sh:/docker-entrypoint-initaws.d/2-setup-queues.sh
 
 networks:
   hocs-network:
