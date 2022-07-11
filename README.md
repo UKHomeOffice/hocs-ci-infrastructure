@@ -1,4 +1,4 @@
-# Hocs CI Infrastructure
+# HOCS CI Infrastructure
 
 
 This is the HOCS CI infrastructure.
@@ -23,10 +23,6 @@ jobs:
 ```
 
 ## Using the Service
-
-### Versioning
-
-This service will not publish a version, calling services should reference `@main`
 
 ### Authors
 
