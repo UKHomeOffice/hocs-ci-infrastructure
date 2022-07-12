@@ -26,7 +26,7 @@ jobs:
           java-version: '17'
 
       - name: Start infrastructure
-        run: ./ci/infrastructure.sh ${{ inputs.components }} ${{ inputs.elastic }}
+        run: ./ci/infrastructure.sh '${{ inputs.components }}' ${{ inputs.elastic }}
         shell: bash
 
       - name: Run tests
