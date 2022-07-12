@@ -5,6 +5,9 @@ on:
       components:
         required: true
         type: string
+      elastic:
+        required: true
+        type: string
 
 jobs:
   test:
@@ -21,10 +24,7 @@ jobs:
           java-version: '17'
 
       - name: Start infrastructure
-        run: docker-compose up -d ${{ inputs.components }}
-
-      - name: Wait for infrastructure
-        run: ./ci/wait-for-infrastructure.sh
+        run: ./ci/infrastructure.sh ${{ inputs.components }} ${{ inputs.elastic }}
         shell: bash
 
       - name: Run tests
