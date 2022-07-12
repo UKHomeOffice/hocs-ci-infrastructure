@@ -6,7 +6,7 @@ on:
         required: true
         type: string
       elastic:
-        required: true
+        required: false
         type: string
 
 jobs:
@@ -26,7 +26,10 @@ jobs:
           java-version: '17'
 
       - name: Start infrastructure
-        run: ./ci/infrastructure.sh ${{ inputs.components }} ${{ inputs.elastic }}
+        run: ./ci/infrastructure.sh
+        env:
+          COMPOSE_SERVICES: ${{ inputs.components }}
+          INCLUDE_ELASTIC: ${{ inputs.elastic || 'false'}}
         shell: bash
 
       - name: Run tests
