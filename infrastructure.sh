@@ -8,7 +8,7 @@ else
   if [[ ${INCLUDE_ELASTIC} == "true" ]]
   then
       echo "Starting with elastic search"
-      docker-compose -f ./ci/docker-compose.yml -f ./ci/docker-compose-elastic.yml up -d ${COMPOSE_SERVICES}
+      docker-compose -f ./ci/docker-compose.yml -f ./ci/docker-compose.elastic.yml up -d ${COMPOSE_SERVICES}
   else
       echo "Starting without elastic search"
       docker-compose -f ./ci/docker-compose.yml up -d ${COMPOSE_SERVICES}
