@@ -12,27 +12,27 @@ until curl http://localstack:4566/health --silent | grep -q "\"sqs\": \"availabl
 done
 
 ## Audit
-awslocal sqs create-queue --queue-name audit-queue-dlq '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name audit-queue-dlq --attributes'{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name audit-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\": \"arn:aws:sqs:eu-west-2:000000000000:audit-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Search
-awslocal sqs create-queue --queue-name search-queue-dlq '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name search-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name search-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:search-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Docs
-awslocal sqs create-queue --queue-name document-queue-dlq '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name document-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name document-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:document-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Case Creator
-awslocal sqs create-queue --queue-name ukvi-complaint-queue-dlq '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name ukvi-complaint-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name ukvi-complaint-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:ukvi-complaint-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Notify
-awslocal sqs create-queue --queue-name notify-queue-dlq '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name notify-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name notify-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:notify-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Migration
-awslocal sqs create-queue --queue-name migration-queue-dlq '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name migration-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name migration-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:migration-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 awslocal sqs list-queues
