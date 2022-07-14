@@ -12,7 +12,7 @@ until curl http://localstack:4566/health --silent | grep -q "\"sqs\": \"availabl
 done
 
 ## Audit
-awslocal sqs create-queue --queue-name audit-queue-dlq --attributes'{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name audit-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name audit-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\": \"arn:aws:sqs:eu-west-2:000000000000:audit-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Search
