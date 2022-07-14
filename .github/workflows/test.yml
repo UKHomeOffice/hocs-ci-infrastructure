@@ -5,6 +5,9 @@ on:
       components:
         required: true
         type: string
+      dependencies:
+        required: false
+        type: string
       elastic:
         required: false
         type: string
@@ -24,6 +27,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Install dependencies
+        if:  ${{ inputs.dependencies != '' }}
+        run: sudo apt-get install ${{ inputs.dependencies }}
 
       - name: Start infrastructure
         run: ./ci/infrastructure.sh
