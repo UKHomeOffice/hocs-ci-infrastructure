@@ -46,7 +46,7 @@ jobs:
 
       - name: Run tests
         run: |
-        npm --loglevel warn ci --production=false --no-optional
-        npm run build-prod
-        npm run lint
-        npm test
+          npm --loglevel warn ci --production=false --no-optional
+          npm run build-prod
+          npm run lint
+          npm test
