@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       components:
-        required: true
+        required: false
         type: string
       dependencies:
         required: false
@@ -17,22 +17,23 @@ jobs:
     name: 'Unit and Integration Tests'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          submodules: true
+      - name: Install OS dependencies
+        if: ${{ inputs.dependencies != '' }}
+        run: sudo apt-get install ${{ inputs.dependencies }}
 
-      - name: Use Java 17
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install dependencies
-        if:  ${{ inputs.dependencies != '' }}
-        run: sudo apt-get install ${{ inputs.dependencies }}
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Start infrastructure
+        if:  ${{ inputs.components != '' }}
         run: ./ci/infrastructure.sh
         env:
           COMPOSE_SERVICES: ${{ inputs.components }}
