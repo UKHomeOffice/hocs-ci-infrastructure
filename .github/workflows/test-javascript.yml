@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 14.x, 16.x ]
+        node-version: [ 14.x, 16.x , 18.x]
       fail-fast: false
     steps:
       - name: Install OS dependencies
@@ -44,9 +44,14 @@ jobs:
           INCLUDE_ELASTIC: ${{ inputs.elastic || 'false' }}
         shell: bash
 
+      - name: Install npm dependencies
+        run: npm --loglevel warn ci --production=false --no-optional
+
+      - name: Build project
+        run: npm run build-prod
+
+      - name: Lint project
+        run: npm run lint
+
       - name: Run tests
-        run: |
-          npm --loglevel warn ci --production=false --no-optional
-          npm run build-prod
-          npm run lint
-          npm test
+        run: npm test
