@@ -2,7 +2,8 @@ name: 'Lint'
 on:
   pull_request:
     types: [ opened, reopened, synchronize ]
-
+    paths:
+      - 'docker-compose**'
 jobs:
   test:
     name: 'Dockerfile Lint'
