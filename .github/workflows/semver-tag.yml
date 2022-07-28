@@ -1,0 +1,41 @@
+name: 'Semver Tag'
+on:
+  pull_request:
+    types: [ labeled, unlabeled, opened, reopened, synchronize ]
+  workflow_call:
+    inputs:
+      images:
+        required: true
+        type: string
+
+jobs:
+  publish:
+    name: 'Main Publish'
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'skip-release') == false
+    steps:
+      - name: Parse the SemVer label
+        id: label
+        uses: UKHomeOffice/match-label-action@v1
+        with:
+          labels: minor,major,patch
+          mode: singular
+
+      - name: Tag repository with SemVer
+        uses: UKHomeOffice/semver-calculate-action@v1
+        with:
+          increment: ${{ steps.label.outputs.matchedLabels }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_to_highest: ${{ github.base_ref == 'main' }}
+
+      - name: Post failure to Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.19.0
+        if: ${{ failure() }}
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack-message: "GitHub Action failure: ${{github.repository}}\nRun: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}\nOriginating PR: ${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
