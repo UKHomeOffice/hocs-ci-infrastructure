@@ -405,6 +405,10 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
     restart: on-failure
+    ports:
+      - "5434:1433"
+    networks:
+      - hocs-network  
     environment:
       SA_PASSWORD: Development01
       ACCEPT_EULA: Y
