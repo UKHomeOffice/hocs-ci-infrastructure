@@ -28,4 +28,6 @@ helm upgrade ${CHART_NAME} ./helm/${CHART_NAME} \
 --timeout 3m \
 --history-max 3 \
 --namespace ${KUBE_NAMESPACE} \
---set hocs-backend-service.version=${VERSION} $*
+--set hocs-backend-service.version=${VERSION} \
+--set hocs-generic-service.version=${VERSION} \
+--set version=${VERSION} $*
