@@ -1048,7 +1048,14 @@
       }
     },
     "settings": {
-      "index.mapping.ignore_malformed": true,
+      "index": {
+        "mapping":{
+          "ignore_malformed": true,
+          "total_fields": {
+            "limit": 1500
+          }
+        }
+      },
       "analysis": {
         "analyzer": {
           "reference_analyzer": {
@@ -1074,4 +1081,3 @@
       }
     }
   }
-  
