@@ -11,10 +11,11 @@ services:
       - hocs-network
     environment:
       JAVA_OPTS: "-Xms32m -Xmx128m"
-      SPRING_PROFILES_ACTIVE: "development, local"
+      SPRING_PROFILES_ACTIVE: "development, local, extracts, consumer"
       SERVER_PORT: 8080
       DB_HOST: "postgres"
       HOCS_INFO_SERVICE: "http://info:8080"
+      HOCS_CASE_SERVICE: "http://casework:8080"
       LOCALSTACK_HOST: "localstack"
     healthcheck:
       test: "curl --fail http://localhost:8080/actuator/health || exit 1"
