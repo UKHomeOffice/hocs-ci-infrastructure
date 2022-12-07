@@ -28,8 +28,8 @@ awslocal sqs create-queue --queue-name document-queue-dlq --attributes '{"Visibi
 awslocal sqs create-queue --queue-name document-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:document-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Case Creator
-awslocal sqs create-queue --queue-name ukvi-complaint-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
-awslocal sqs create-queue --queue-name ukvi-complaint-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:ukvi-complaint-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
+awslocal sqs create-queue --queue-name case-creator-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name case-creator-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:case-creator-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
 ## Notify
 awslocal sqs create-queue --queue-name notify-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
@@ -39,6 +39,10 @@ awslocal sqs create-queue --queue-name notify-queue --attributes '{"RedrivePolic
 awslocal sqs create-queue --queue-name migration-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
 awslocal sqs create-queue --queue-name migration-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:migration-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
 
+## OpenSearch
+awslocal sqs create-queue --queue-name opensearch-queue-dlq --attributes '{"VisibilityTimeout": "3"}'
+awslocal sqs create-queue --queue-name opensearch-queue --attributes '{"RedrivePolicy": "{\"deadLetterTargetArn\":\"arn:aws:sqs:eu-west-2:000000000000:opensearch-queue-dlq\", \"maxReceiveCount\":1}", "VisibilityTimeout": "10"}'
+
 awslocal sqs list-queues
 
 ## SNS Subscriptions
@@ -46,7 +50,9 @@ awslocal sns create-topic --name hocs-audit-topic
 awslocal sns subscribe --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --attributes RawMessageDelivery=true --protocol sqs --notification-endpoint arn:aws:sns:eu-west-2:000000000000:extracts-queue
 awslocal sns subscribe --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --attributes RawMessageDelivery=true --protocol sqs --notification-endpoint arn:aws:sns:eu-west-2:000000000000:audit-queue
 awslocal sns subscribe --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --attributes RawMessageDelivery=true --protocol sqs --notification-endpoint arn:aws:sns:eu-west-2:000000000000:search-queue
+awslocal sns subscribe --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --attributes RawMessageDelivery=true --protocol sqs --notification-endpoint arn:aws:sns:eu-west-2:000000000000:opensearch-queue
 awslocal sns set-subscription-attributes --subscription-arn $(aws --endpoint-url=http://localstack:4566 sns list-subscriptions-by-topic --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --output json | jq --raw-output '.Subscriptions[0].SubscriptionArn') --attribute-name RawMessageDelivery --attribute-value true
 awslocal sns set-subscription-attributes --subscription-arn $(aws --endpoint-url=http://localstack:4566 sns list-subscriptions-by-topic --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --output json | jq --raw-output '.Subscriptions[1].SubscriptionArn') --attribute-name RawMessageDelivery --attribute-value true
 awslocal sns set-subscription-attributes --subscription-arn $(aws --endpoint-url=http://localstack:4566 sns list-subscriptions-by-topic --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --output json | jq --raw-output '.Subscriptions[2].SubscriptionArn') --attribute-name RawMessageDelivery --attribute-value true
+awslocal sns set-subscription-attributes --subscription-arn $(aws --endpoint-url=http://localstack:4566 sns list-subscriptions-by-topic --topic-arn arn:aws:sns:eu-west-2:000000000000:hocs-audit-topic --output json | jq --raw-output '.Subscriptions[3].SubscriptionArn') --attribute-name RawMessageDelivery --attribute-value true
 awslocal sns list-subscriptions
