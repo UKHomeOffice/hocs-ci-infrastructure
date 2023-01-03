@@ -228,7 +228,7 @@ services:
       - hocs-network
     environment:
       JAVA_OPTS: "-Xms32m -Xmx128m"
-      SPRING_PROFILES_ACTIVE: "development, local"
+      SPRING_PROFILES_ACTIVE: "development, local, refreshCountries"
       SERVER_PORT: 8080
       DB_HOST: "postgres"
       CASE_QUEUE_NAME: "case-queue"
