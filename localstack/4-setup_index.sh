@@ -15,8 +15,6 @@ then
     exit 1
 fi
 
-echo "HERE!!"
-
 until awslocal opensearch describe-domain --domain-name decs | jq ".DomainStatus.Processing" | grep -q "false"; do
    sleep 5
    echo "Waiting for ElasticSearch to be ready..."
