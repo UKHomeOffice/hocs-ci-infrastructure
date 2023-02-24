@@ -15,30 +15,32 @@ then
     exit 1
 fi
 
-until curl localhost.localstack.cloud:4566/es/eu-west-2/decs --silent | grep -q "elasticsearch"; do
+echo "HERE!!"
+
+until awslocal opensearch describe-domain --domain-name decs | jq ".DomainStatus.Processing" | grep -q "false"; do
    sleep 5
    echo "Waiting for ElasticSearch to be ready..."
 done
 
 # Multiple index mode
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-min --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-tro --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-dten --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-mpam --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-mts --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-smc --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-comp2 --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-iedet --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-comp --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-foi --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-bf --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-bf2 --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-to --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-pogr --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-pogr2 --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-wcs --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-min --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-tro --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-dten --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-mpam --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-mts --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-smc --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-comp2 --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-iedet --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-comp --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-foi --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-bf --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-bf2 --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-to --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-pogr --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-pogr2 --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-wcs --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
 
-curl -X POST localhost.localstack.cloud:4566/es/eu-west-2/decs/_aliases --silent -H "Content-Type: application/json" -d '{
+curl -X POST localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/_aliases --silent -H "Content-Type: application/json" -d '{
 "actions":[
    {
       "add":{
@@ -145,4 +147,4 @@ curl -X POST localhost.localstack.cloud:4566/es/eu-west-2/decs/_aliases --silent
 ]}'
 
 # Kept while SINGULAR mode is supported
-curl -X PUT localhost.localstack.cloud:4566/es/eu-west-2/decs/local-case --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"
+curl -X PUT localhost.localstack.cloud:4566/opensearch/eu-west-2/decs/local-case --silent -H "Content-Type: application/json" -d "@${ELASTIC_MAPPING_PATH}"

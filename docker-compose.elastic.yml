@@ -8,12 +8,12 @@ services:
 
   localstack:
     environment:
-      SERVICES: sqs,sns,es,s3
+      SERVICES: sqs,sns,opensearch,s3
       OPENSEARCH_ENDPOINT_STRATEGY: "path"
     volumes:
-      - ${PWD}/ci/localstack/3-setup-elastic.sh:/docker-entrypoint-initaws.d/3-setup-elastic.sh
-      - ${PWD}/ci/localstack/4-setup_index.sh:/docker-entrypoint-initaws.d/4-setup_index.sh
-      - ${PWD}/ci/localstack/elastic_mapping.json:/docker-entrypoint-initaws.d/elastic_mapping.json
+      - ${PWD}/ci/localstack/3-setup-elastic.sh:/etc/localstack/init/ready.d/3-setup-elastic.sh
+      - ${PWD}/ci/localstack/4-setup_index.sh:/etc/localstack/init/ready.d/4-setup_index.sh
+      - ${PWD}/ci/localstack/elastic_mapping.json:/etc/localstack/init/ready.d/elastic_mapping.json
 
   search:
     image: quay.io/ukhomeofficedigital/hocs-search:${SEARCH_TAG:-latest}
