@@ -1021,6 +1021,33 @@
                   "ignore_above": 256
                 }
               }
+            },
+            "Tier1OutcomeDateFinal": {
+              "type": "date"
+            },
+            "Mff108Date": {
+              "type": "date"
+            },
+            "EmploymentPaidDate": {
+              "type": "date"
+            },
+            "ImpactPrelimPaidDate": {
+              "type": "date"
+            },
+            "Mff125FullDate": {
+              "type": "date"
+            },
+            "ImpactPrelimSentDate": {
+              "type": "date"
+            },
+            "ImpactPrelimConsideredDate": {
+              "type": "date"
+            },
+            "LegalFeesPaidDate": {
+              "type": "date"
+            },
+            "ImpactPaidDate": {
+              "type": "date"
             }
           }
         },
@@ -1056,6 +1083,7 @@
           }
         }
       },
+      "number_of_shards": 1,
       "analysis": {
         "analyzer": {
           "reference_analyzer": {
