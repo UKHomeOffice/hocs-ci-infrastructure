@@ -254,7 +254,8 @@ services:
       - keycloak
 
   keycloak:
-    image: quay.io/keycloak/keycloak:15.1.1
+    image: quay.io/keycloak/keycloak:22.0.4
+    command: ["start-dev"]
     restart: on-failure
     ports:
       - "9990:9990"
@@ -262,7 +263,7 @@ services:
     networks:
       - hocs-network
     environment:
-      JAVA_OPTS: "-Xms32m -Xmx128m"
+      #"JAVA_OPTS: "-Xms128m -Xmx256m"
       KEYCLOAK_USER: root
       KEYCLOAK_PASSWORD: dev
       KEYCLOAK_IMPORT: /tmp/local-realm.json
