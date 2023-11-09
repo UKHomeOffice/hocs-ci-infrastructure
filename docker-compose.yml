@@ -263,7 +263,7 @@ services:
     networks:
       - hocs-network
     environment:
-      #"JAVA_OPTS: "-Xms128m -Xmx256m"
+      JAVA_OPTS: "-Xms128m -Xmx256m"
       KEYCLOAK_USER: root
       KEYCLOAK_PASSWORD: dev
       KEYCLOAK_IMPORT: /tmp/local-realm.json
