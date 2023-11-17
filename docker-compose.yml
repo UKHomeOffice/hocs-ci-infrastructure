@@ -264,15 +264,15 @@ services:
       - hocs-network
     environment:
       JAVA_OPTS: "-Xms128m -Xmx256m"
-      KEYCLOAK_USER: root
-      KEYCLOAK_PASSWORD: dev
+      KEYCLOAK_ADMIN: root
+      KEYCLOAK_ADMIN_PASSWORD: dev
       KEYCLOAK_IMPORT: /tmp/local-realm.json
-      DB_VENDOR: postgres
-      DB_ADDR: postgres
-      DB_PORT: 5432
-      DB_DATABASE: postgres
-      DB_USER: root
-      DB_PASSWORD: dev
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: postgres
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: dev
     healthcheck:
       test: "curl -f http://localhost:8080/auth/ || exit 1"
       timeout: 5s
