@@ -254,7 +254,8 @@ services:
       - keycloak
 
   keycloak:
-    image: quay.io/keycloak/keycloak:15.1.1
+    image: quay.io/keycloak/keycloak:22.0.5
+    command: ["start-dev  --import-realm"]
     restart: on-failure
     ports:
       - "9990:9990"
@@ -262,22 +263,21 @@ services:
     networks:
       - hocs-network
     environment:
-      JAVA_OPTS: "-Xms32m -Xmx128m"
-      KEYCLOAK_USER: root
-      KEYCLOAK_PASSWORD: dev
-      KEYCLOAK_IMPORT: /tmp/local-realm.json
-      DB_VENDOR: postgres
-      DB_ADDR: postgres
-      DB_PORT: 5432
-      DB_DATABASE: postgres
-      DB_USER: root
-      DB_PASSWORD: dev
+      JAVA_OPTS: "-Xms128m -Xmx256m"
+      KEYCLOAK_ADMIN: root
+      KEYCLOAK_ADMIN_PASSWORD: dev
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: postgres
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: dev
     healthcheck:
-      test: "curl -f http://localhost:8080/auth/ || exit 1"
+      test: "curl -f http://localhost:8080/ || exit 1"
       timeout: 5s
       retries: 40
     volumes:
-      - ${PWD}/ci/keycloak/local-realm.json:/tmp/local-realm.json
+      - ${PWD}/ci/keycloak/local-realm.json:/opt/keycloak/data/import/local-realm.json
     depends_on:
       - postgres
 
