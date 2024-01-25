@@ -255,7 +255,6 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:15.1.1
-    command: ["start-dev  --import-realm"]
     restart: on-failure
     ports:
       - "9990:9990"
