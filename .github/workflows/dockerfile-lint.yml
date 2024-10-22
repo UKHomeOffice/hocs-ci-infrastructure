@@ -14,4 +14,4 @@ jobs:
           submodules: true
 
       - name: lint
-        run: docker-compose config
+        run: docker compose config
