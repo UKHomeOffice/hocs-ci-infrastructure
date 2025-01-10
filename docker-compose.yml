@@ -203,6 +203,7 @@ services:
       CASEWORK_SERVICE: http://casework:8080
       INFO_SERVICE: http://info:8080
       DOCUMENT_SERVICE: http://documents:8080
+      TEMPLATES_SERVICE: http://templates:8080
       ALLOWED_FILE_EXTENSIONS: "doc,docx,txt,rtf,html,pdf,jpg,jpeg,tif,tiff,png,bmp,gif,xls,xlsx,msg"
       DOCUMENT_BULK_LIMIT: 40
       VALID_DAYS_RANGE: 180
@@ -218,6 +219,7 @@ services:
       - info
       - localstack
       - workflow
+      - templates
 
   info:
     image: quay.io/ukhomeofficedigital/hocs-info-service:${INFO_TAG:-latest}
@@ -318,6 +320,7 @@ services:
       DOCUMENT_SERVICE: http://documents:8080
       ALLOWED_FILE_EXTENSIONS: "doc,docx,txt,rtf,html,pdf,jpg,jpeg,tif,tiff,png,bmp,gif,xls,xlsx,msg"
       PORT: 8080
+      S3_ENDPOINT: http://localstack:4566
     healthcheck:
       test: "curl --fail http://localhost:8080/health || exit 1"
       timeout: 5s
@@ -404,7 +407,7 @@ services:
       SERVER_PORT: 8080
       HOCS_INFO_SERVICE: "http://info:8080"
       HOCS_CASE_SERVICE: "http://casework:8080"
-      HOCS_DOCUMENTS_SERVICE: "http://documents:8080"
+      HOCS_DOCUMENT_SERVICE: "http://documents:8080"
     healthcheck:
       test: "curl --fail http://localhost:8080/actuator/health || exit 1"
       timeout: 5s
