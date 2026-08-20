@@ -221,6 +221,64 @@ services:
       - workflow
       - templates
 
+  frontend-proxy:
+    image: nginx:1.27-alpine
+    command:
+      - /bin/sh
+      - -c
+      - sh /usr/local/bin/render-frontend-proxy-config.sh && exec nginx -g 'daemon off;'
+    restart: on-failure
+    ports:
+      - "8094:8080"
+    networks:
+      - hocs-network
+    environment:
+      PROXY_UPSTREAM: "frontend:8080"
+      PROXY_AUTH_USER_ID: "${FRONTEND_PROXY_AUTH_USER_ID:-}"
+      PROXY_AUTH_TOKEN: "${FRONTEND_PROXY_AUTH_TOKEN:-1234456}"
+      PROXY_AUTH_GROUPS: "${FRONTEND_PROXY_AUTH_GROUPS:-}"
+      PROXY_AUTH_USERNAME: "${FRONTEND_PROXY_AUTH_USERNAME:-hub}"
+      PROXY_AUTH_SUBJECT: "${FRONTEND_PROXY_AUTH_USER_ID:-}"
+      PROXY_AUTH_ROLES: "${FRONTEND_PROXY_AUTH_ROLES:-}"
+    healthcheck:
+      test: "wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1"
+      timeout: 5s
+      retries: 40
+    volumes:
+      - ${PWD}/ci/frontend_proxy/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ${PWD}/ci/frontend_proxy/render-frontend-proxy-config.sh:/usr/local/bin/render-frontend-proxy-config.sh:ro
+    depends_on:
+      - frontend
+
+  management-ui-proxy:
+    image: nginx:1.27-alpine
+    command:
+      - /bin/sh
+      - -c
+      - sh /usr/local/bin/render-frontend-proxy-config.sh && exec nginx -g 'daemon off;'
+    restart: on-failure
+    ports:
+      - "8095:8080"
+    networks:
+      - hocs-network
+    environment:
+      PROXY_UPSTREAM: "management-ui:8080"
+      PROXY_AUTH_USER_ID: "${FRONTEND_PROXY_AUTH_USER_ID:-}"
+      PROXY_AUTH_TOKEN: "${FRONTEND_PROXY_AUTH_TOKEN:-1234456}"
+      PROXY_AUTH_GROUPS: "${FRONTEND_PROXY_AUTH_GROUPS:-}"
+      PROXY_AUTH_USERNAME: "${FRONTEND_PROXY_AUTH_USERNAME:-hub}"
+      PROXY_AUTH_SUBJECT: "${FRONTEND_PROXY_AUTH_USER_ID:-}"
+      PROXY_AUTH_ROLES: "${FRONTEND_PROXY_AUTH_ROLES:-}"
+    healthcheck:
+      test: "wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1"
+      timeout: 5s
+      retries: 40
+    volumes:
+      - ${PWD}/ci/frontend_proxy/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ${PWD}/ci/frontend_proxy/render-frontend-proxy-config.sh:/usr/local/bin/render-frontend-proxy-config.sh:ro
+    depends_on:
+      - management-ui
+
   info:
     image: quay.io/ukhomeofficedigital/hocs-info-service:${INFO_TAG:-latest}
     restart: on-failure
